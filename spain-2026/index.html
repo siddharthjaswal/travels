@@ -68,8 +68,9 @@ nav.views::-webkit-scrollbar{display:none}
 .vtab:hover{background:var(--surface-2);color:var(--ink)}
 .vtab.on{background:var(--ink);color:var(--bg)}
 .vstate{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
-.here{margin-left:auto;flex:0 0 auto;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-3);opacity:0;transition:opacity .2s;padding-left:12px;white-space:nowrap}
+.here{margin-left:auto;flex:0 1 auto;min-width:0;max-width:42%;font:600 11px/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);opacity:0;transition:opacity .2s;
+  padding-left:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .here.show{opacity:1}
 /* Views switch in pure CSS so they work with scripts disabled (some in-app
    previewers render local files as static snapshots). The :checked rules use a
@@ -219,6 +220,9 @@ nav.views::-webkit-scrollbar{display:none}
 .legend{display:flex;gap:16px;flex-wrap:wrap;padding:26px 0 0;margin-top:22px;
   border-top:1px solid var(--line);font:11px/1 var(--mono);color:var(--ink-3)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
+.back{display:inline-flex;align-items:center;gap:7px;margin-top:26px;font:600 13px/1 var(--sans);
+  color:var(--ink-3);text-decoration:none}
+.back:hover{color:var(--terracotta)}
 
 @media (max-width:560px){
   :root{--rail:15px; --indent:50px}
@@ -445,6 +449,7 @@ nav.views::-webkit-scrollbar{display:none}
 <div class="foot">Booked so far: Emirates flight + TOC Hostel Madrid. Everything else is a working estimate in ₹ — figures update as you lock things in. Reward points (₹4,150 on TOC) bank toward next trip's flight, so they're excluded here. Excludes food &amp; daily spending (budget ~₹3,000–4,000/day).</div></section>
 
 
+  <a class="back" href="../">← All trips</a>
 </div>
 <script>
 const $ = s => document.querySelector(s);

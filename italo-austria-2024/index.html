@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dolomites &amp; Austria 2024 — Itinerary</title>
+<!-- Icons: Lucide v0.544.0, ISC licence - https://github.com/lucide-icons/lucide -->
+<style>
+:root{
+  --bg:#faf7f2; --surface:#fff; --surface-2:#f4efe7; --line:#e6ddd0; --line-soft:#f0e8dc;
+  --ink:#241d19; --ink-2:#6b5f56; --ink-3:#998c81;
+  --terracotta:#c05a35; --azulejo:#2f6d8f; --olive:#5b7a48; --saffron:#bf8a1c; --clay:#9d8b74;
+  --shadow:0 1px 2px rgba(60,40,25,.04), 0 12px 30px -20px rgba(60,40,25,.4);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --rail:17px; --indent:58px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16130f; --surface:#1f1b16; --surface-2:#2a251e; --line:#372f26; --line-soft:#2b251e;
+    --ink:#f4ede2; --ink-2:#b8ab9b; --ink-3:#8b7e70;
+    --terracotta:#e8825c; --azulejo:#6fb0d4; --olive:#93bd77; --saffron:#dcae4f; --clay:#c3ad91;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 12px 30px -20px rgba(0,0,0,.95);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);
+  -webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px 80px}
+h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.012em}
+p{margin:0}
+.ic{width:1em;height:1em;flex:0 0 auto}
+
+/* ---------------------------------------------------------------- hero --- */
+.hero{padding:40px 0 20px}
+.kicker{font:600 10.5px/1.4 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--terracotta)}
+.hero h1{font-family:var(--serif);font-size:clamp(31px,6.4vw,46px);font-weight:600;margin-top:14px}
+.hero .dates{margin-top:11px;color:var(--ink-2);font-size:15px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--mono);letter-spacing:.02em;
+  padding:8px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2)}
+.pill.hot{background:var(--terracotta);border-color:var(--terracotta);color:#fff}
+.notice{display:flex;gap:8px;align-items:flex-start;margin-top:16px;padding:10px 13px;border-radius:10px;
+  font-size:12.5px;line-height:1.5;color:var(--ink-2);
+  background:color-mix(in srgb,var(--azulejo) 9%,transparent);
+  border:1px solid color-mix(in srgb,var(--azulejo) 28%,transparent)}
+
+/* nights bar */
+.nights{margin-top:22px}
+.nights .bar{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--surface-2);gap:2px}
+.nights .seg{height:100%;border-radius:2px}
+.nights .key{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;
+  font:11px/1 var(--mono);letter-spacing:.04em;color:var(--ink-3)}
+.nights .key span{display:inline-flex;align-items:center;gap:6px}
+.nights .kd{width:7px;height:7px;border-radius:2px}
+
+/* ------------------------------------------------------------- nav/views -- */
+nav.views{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:4px;
+  margin:24px -20px 0;padding:10px 20px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+nav.views::-webkit-scrollbar{display:none}
+.vtab{flex:0 0 auto;font:600 13.5px/1 var(--sans);padding:9px 15px;border-radius:999px;cursor:pointer;
+  border:0;background:none;color:var(--ink-2);white-space:nowrap;transition:background .15s,color .15s;
+  -webkit-tap-highlight-color:transparent}
+.vtab:hover{background:var(--surface-2);color:var(--ink)}
+.vtab.on{background:var(--ink);color:var(--bg)}
+.vstate{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
+.here{margin-left:auto;flex:0 1 auto;min-width:0;max-width:42%;font:600 11px/1 var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);opacity:0;transition:opacity .2s;
+  padding-left:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.here.show{opacity:1}
+/* Views switch in pure CSS so they work with scripts disabled (some in-app
+   previewers render local files as static snapshots). The :checked rules use a
+   direct sibling match - the descendant form does not repaint reliably. */
+.view{display:none;animation:fade .28s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+
+/* filters + tools */
+.controls{display:flex;flex-wrap:wrap;gap:7px;padding:20px 0 6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 12.5px/1 var(--sans);padding:8px 13px;
+  border-radius:999px;cursor:pointer;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink-2);transition:all .15s}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip .n{opacity:.55;font-variant-numeric:tabular-nums}
+.tools{display:flex;gap:7px;flex-wrap:wrap;padding:10px 0 0}
+.tool{display:inline-flex;align-items:center;gap:7px;font:600 12.5px/1 var(--sans);padding:9px 14px;
+  border-radius:999px;cursor:pointer;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink-2);transition:all .15s}
+.tool:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.tool .ic{width:14px;height:14px}
+
+/* ------------------------------------------------------------------ rail -- */
+.line{position:relative;padding:20px 0 0}
+.leg{position:relative;padding-left:var(--indent)}
+/* the rail: one segment per city, so the line changes colour as you travel */
+.leg::before{content:"";position:absolute;left:var(--rail);transform:translateX(-50%);
+  top:0;bottom:0;width:2px;background:var(--leg);opacity:.34;border-radius:2px}
+.leg:first-child::before{top:30px}
+.line>.leg:last-of-type::before{bottom:0}
+
+/* Nodes live inside .station/.day, which sit within .leg's left padding - so the
+   containing block starts one --indent right of the rail. Subtract it to land the
+   icon exactly on the line. (.node-end is a child of .end, which owns its own
+   padding, so it needs no correction - see below.) */
+.node{position:absolute;left:calc(var(--rail) - var(--indent));transform:translateX(-50%);
+  display:grid;place-items:center;z-index:2}
+.node-city{top:22px;width:36px;height:36px;border-radius:50%;background:var(--bg);
+  border:2px solid var(--leg);color:var(--leg)}
+.node-city .ic{width:17px;height:17px}
+.node-dot{top:3px;width:11px;height:11px;border-radius:50%;background:var(--bg);
+  border:2px solid var(--line);}
+.node-travel{top:-3px;width:30px;height:30px;border-radius:50%;background:var(--surface);
+  border:2px dashed color-mix(in srgb,var(--azulejo) 55%,transparent);color:var(--azulejo)}
+.node-travel .ic{width:14px;height:14px}
+.node-end{left:var(--rail);top:0;width:15px;height:15px;border-radius:50%;background:var(--bg);
+  border:2px solid var(--line)}
+
+.station{position:relative;padding:22px 0 10px}
+.station h2{font-family:var(--serif);font-size:26px;font-weight:600}
+.station .sub{font:11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);margin-top:8px}
+.stay{display:flex;gap:9px;align-items:flex-start;margin-top:13px;padding:12px 14px;border-radius:11px;
+  background:var(--surface-2);font-size:13px;color:var(--ink-2);line-height:1.5}
+.stay .ic{width:15px;height:15px;margin-top:2px;color:var(--leg)}
+.stay b{color:var(--ink);font-weight:600}
+
+.day{position:relative;margin-top:20px}
+/* travel days overprint the rail with dashes - movement, not staying put */
+.day.travel::before{content:"";position:absolute;left:calc(var(--rail) - var(--indent));
+  transform:translateX(-50%);top:-10px;bottom:-10px;width:2px;z-index:1;
+  background:repeating-linear-gradient(var(--bg) 0 5px,transparent 5px 11px)}
+.day-label{font:600 11px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:11px;padding-top:1px}
+.day.today .day-label{color:var(--terracotta)}
+.day.today .day-label::after{content:" · today"}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:16px 17px;margin-bottom:10px;box-shadow:var(--shadow)}
+.card:last-child{margin-bottom:0}
+.card.travel{border-left:3px solid var(--azulejo)}
+.card-top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:2px}
+.card h3{font-size:16.5px;font-weight:650;flex:1 1 auto;min-width:190px}
+.tag{font:600 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 7px;border-radius:5px;white-space:nowrap}
+.tag.confirmed{background:color-mix(in srgb,var(--olive) 15%,transparent);color:var(--olive)}
+.tag.likeit{background:color-mix(in srgb,var(--saffron) 20%,transparent);color:var(--saffron)}
+.tag.unbooked{background:color-mix(in srgb,var(--clay) 22%,transparent);color:var(--clay)}
+.cost{font:600 12px/1 var(--mono);padding:4px 8px;border-radius:6px;white-space:nowrap;
+  border:1px solid var(--line);color:var(--ink-2)}
+.cost.paid{color:var(--olive);border-color:color-mix(in srgb,var(--olive) 38%,transparent);
+  background:color-mix(in srgb,var(--olive) 7%,transparent)}
+.cost.est{color:var(--clay)}
+.blurb{margin-top:9px;font-size:13.5px;line-height:1.62;color:var(--ink-2)}
+.blurb ul.mini{list-style:none;margin:0 0 9px;padding:0;font:12.5px/1.8 var(--mono)}
+.blurb ul.mini li{position:relative;padding-left:16px}
+.blurb ul.mini li::before{content:"›";position:absolute;left:3px;color:var(--azulejo)}
+.blurb ul.mini b{color:var(--ink);font-weight:600}
+.end{position:relative;padding:6px 0 0 var(--indent);color:var(--ink-3);
+  font:11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+
+/* copy chips */
+.copy{font:inherit;font-weight:650;color:var(--azulejo);
+  background:color-mix(in srgb,var(--azulejo) 9%,transparent);
+  border:1px dashed color-mix(in srgb,var(--azulejo) 42%,transparent);border-radius:5px;
+  padding:1px 6px;cursor:pointer;transition:all .15s}
+.copy:hover{background:var(--azulejo);color:var(--surface);border-style:solid}
+.copy.done{background:var(--olive);border-color:var(--olive);color:#fff}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--bg);font:600 13px/1 var(--sans);padding:12px 17px;
+  border-radius:999px;transition:opacity .2s,transform .2s;z-index:60}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ------------------------------------------------------------- transport -- */
+.tsec{margin-top:26px}
+.tsec-h{display:flex;align-items:center;gap:9px;font:600 10.5px/1 var(--mono);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.tsec-h .ic{width:14px;height:14px;color:var(--azulejo)}
+.trow{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line-soft);align-items:flex-start}
+.trow:last-child{border-bottom:none}
+.trow .tw{flex:0 0 78px;font:600 11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;
+  color:var(--terracotta);padding-top:3px}
+.trow .tb{flex:1;min-width:0}
+.trow h4{margin:0 0 6px;font-size:15px;font-weight:650}
+.trow .det{font:12.5px/1.65 var(--mono);color:var(--ink-2)}
+.tflight{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;
+  padding:12px 0;border-bottom:1px solid var(--line-soft);font:13px/1.4 var(--mono)}
+.tflight:last-child{border-bottom:none}
+.tflight b{color:var(--terracotta)}
+.tflight .t{color:var(--ink-2)}
+.ok{font:600 9px/1 var(--mono);letter-spacing:.11em;padding:3px 6px;border-radius:4px;margin-left:7px;
+  background:color-mix(in srgb,var(--olive) 15%,transparent);color:var(--olive)}
+
+/* ----------------------------------------------------------------- money -- */
+.sum{display:flex;gap:10px;margin:22px 0 6px;flex-wrap:wrap}
+.sbox{flex:1;min-width:145px;padding:15px 16px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface)}
+.sbox .l{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:8px}
+.sbox .v{font-family:var(--serif);font-size:25px;font-weight:600;font-variant-numeric:tabular-nums}
+.sbox.a .v{color:var(--olive)} .sbox.b .v{color:var(--clay)}
+.sbox.c{background:color-mix(in srgb,var(--terracotta) 7%,var(--surface));
+  border-color:color-mix(in srgb,var(--terracotta) 32%,transparent)}
+.sbox.c .v{color:var(--terracotta)}
+.sec{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+  margin:26px 0 2px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.row{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:11px 0;
+  border-bottom:1px solid var(--line-soft)}
+.row:last-child{border-bottom:none}
+.row .it{font-size:14px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;align-self:center}
+.dot.c{background:var(--olive)} .dot.l{background:var(--saffron)} .dot.u{background:var(--clay)}
+.note{font:10.5px/1.45 var(--mono);color:var(--ink-3)}
+.amt{font:600 13px/1 var(--mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+.foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:12.5px;line-height:1.65;color:var(--ink-3)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:26px 0 0;margin-top:22px;
+  border-top:1px solid var(--line);font:11px/1 var(--mono);color:var(--ink-3)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.back{display:inline-flex;align-items:center;gap:7px;margin-top:26px;font:600 13px/1 var(--sans);
+  color:var(--ink-3);text-decoration:none}
+.back:hover{color:var(--terracotta)}
+
+@media (max-width:560px){
+  :root{--rail:15px; --indent:50px}
+  .hero{padding:28px 0 14px}
+  .card{padding:14px 15px}
+  .node-city{width:32px;height:32px;top:20px}
+  .node-travel{width:27px;height:27px}
+  .trow{gap:11px} .trow .tw{flex-basis:66px}
+  /* stack every flight row the same way, rather than three one-liners and one wrap */
+  .tflight{flex-direction:column;align-items:flex-start;gap:5px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .view{animation:none}
+}
+@media print{
+  nav.views,.controls,.tools,.toast{display:none !important}
+  .view{display:block !important}
+  .card,.leg{box-shadow:none;break-inside:avoid}
+  body{background:#fff}
+}
+
+.badge{display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--mono);
+  letter-spacing:.03em;padding:8px 12px;border-radius:999px;
+  background:color-mix(in srgb,var(--olive) 15%,transparent);color:var(--olive);
+  border:1px solid color-mix(in srgb,var(--olive) 35%,transparent)}
+.badge .ic{width:13px;height:13px}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.flag{font:600 11px/1 var(--mono);letter-spacing:.04em;padding:6px 10px;border-radius:999px;
+  background:var(--surface-2);color:var(--ink-2)}
+.trip-note{margin-top:14px;padding:10px 13px;border-radius:10px;font-size:12.5px;line-height:1.55;
+  color:var(--ink-2);background:color-mix(in srgb,var(--saffron) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--saffron) 30%,transparent)}
+.extra{background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:18px 19px;margin-bottom:12px;box-shadow:var(--shadow)}
+.extra h3{font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:10px}
+.extra .mini{list-style:none;margin:0;padding:0;font:13px/1.85 var(--mono);color:var(--ink-2)}
+.extra .mini li{position:relative;padding-left:16px}
+.extra .mini li::before{content:"›";position:absolute;left:3px;color:var(--terracotta)}
+
+#r-journey:checked ~ #v-journey,
+#r-transport:checked ~ #v-transport {display:block}
+#r-journey:checked ~ nav .vtab[for="r-journey"],
+#r-transport:checked ~ nav .vtab[for="r-transport"] {background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <input class="vstate" type="radio" name="view" id="r-journey" checked tabindex="-1" aria-hidden="true">
+  <input class="vstate" type="radio" name="view" id="r-transport" tabindex="-1" aria-hidden="true">
+
+  <header class="hero">
+    <div class="kicker">13 — 23 Sep 2024</div>
+    <h1>Dolomites &amp; Austria</h1>
+    <p class="dates">Bolzano · Tre Cime · Salzburg · Vienna · Cinque Terre</p>
+    <div class="meta">
+      <span class="badge"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>Completed · 23 Sep 2024</span>
+      <span class="pill">10 nights · 7 stops</span>
+    </div>
+    <div class="flags"><span class="flag">Italy</span><span class="flag">Austria</span></div>
+    
+    <div class="nights">
+      <div class="bar"><div class="seg" style="width:9.0909%;background:var(--terracotta)"></div><div class="seg" style="width:9.0909%;background:var(--azulejo)"></div><div class="seg" style="width:9.0909%;background:var(--saffron)"></div><div class="seg" style="width:27.2727%;background:var(--olive)"></div><div class="seg" style="width:18.1818%;background:var(--clay)"></div><div class="seg" style="width:18.1818%;background:var(--terracotta)"></div><div class="seg" style="width:9.0909%;background:var(--azulejo)"></div></div>
+      <div class="key"><span><span class="kd" style="background:var(--terracotta)"></span>Milan 1</span><span><span class="kd" style="background:var(--azulejo)"></span>Bolzano 1</span><span><span class="kd" style="background:var(--saffron)"></span>Toblach 1</span><span><span class="kd" style="background:var(--olive)"></span>Salzburg 3</span><span><span class="kd" style="background:var(--clay)"></span>Vienna 2</span><span><span class="kd" style="background:var(--terracotta)"></span>La Spezia 2</span><span><span class="kd" style="background:var(--azulejo)"></span>Milan 1</span></div>
+    </div>
+  </header>
+
+  <nav class="views">
+    <label class="vtab on" for="r-journey">Journey</label>
+    <label class="vtab" for="r-transport">Transport</label>
+    <span class="here" id="here"></span>
+  </nav>
+
+  <section class="view" id="v-journey"><div class="line">  <div class="leg" style="--leg:var(--terracotta)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>Milan</h2>
+      <div class="sub">1 day</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Milan</span></div>
+    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">13 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Arriving at 19:20</h3></div>
+        <div class="blurb"><ul class='mini'><li>Head to Hostel</li><li>Dinner</li></ul></div>
+      </article>    </div>  </div>  <div class="leg" style="--leg:var(--azulejo)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>Bolzano</h2>
+      <div class="sub">1 day</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Hotel Blitzburg</span></div>
+    </div>    <div class="day travel">      <span class="node node-travel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" /> <path d="m9 15-1-1" /> <path d="m15 15 1-1" /> <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" /> <path d="m8 19-2 3" /> <path d="m16 19 2 3" /></svg></span>      <div class="day-label">14 Sep</div>      <article class="card travel">
+        <div class="card-top"><h3>8:15 AM Milan - 11:11 AM Bolzano</h3></div>
+        <div class="blurb"><ul class='mini'><li>Seceda : Guide</li><li>Lago di Carezza</li></ul></div>
+      </article>    </div>  </div>  <div class="leg" style="--leg:var(--saffron)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>Toblach</h2>
+      <div class="sub">1 day</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Booking</span></div>
+    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">15 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Tre Cime di Lavaredo : Guide</h3></div>
+        <div class="blurb">Cadini di Misurina : Guide</div>
+      </article>    </div>  </div>  <div class="leg" style="--leg:var(--olive)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>Salzburg</h2>
+      <div class="sub">3 days</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Stadtalm Naturfreundehaus · aohostel</span></div>
+    </div>    <div class="day travel">      <span class="node node-travel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" /> <path d="m9 15-1-1" /> <path d="m15 15 1-1" /> <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" /> <path d="m8 19-2 3" /> <path d="m16 19 2 3" /></svg></span>      <div class="day-label">16 Sep</div>      <article class="card travel">
+        <div class="card-top"><h3>5:55 - Toblach (R 1832) - 6:59 Mühlbach (401) 07:12 - 07:29 Brixen (330)</h3></div>
+        <div class="blurb"><ul class='mini'><li>Val di Funes</li><li>8:59 - 9:59 Ganeid (330) - Brixen</li><li>11:04 - Brixen - Innsbruck 12:36</li><li>16:09 - Innsbruck - Salzburg 17:02</li></ul></div>
+      </article>    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">17 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Mirabell Palace</h3></div>
+        <div class="blurb"><ul class='mini'><li>Mozart Residence</li><li>Fortress Hohensalzburg</li><li>Red Bull Hangar-7</li></ul></div>
+      </article>    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">18 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Berchtesgaden</h3></div>
+        <div class="blurb">Jenner Aussichtsplattform</div>
+      </article>    </div>  </div>  <div class="leg" style="--leg:var(--clay)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>Vienna</h2>
+      <div class="sub">2 days</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Vienna · NightJet</span></div>
+    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">19 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Visit to Danube River</h3></div>
+        
+      </article>    </div>    <div class="day travel">      <span class="node node-travel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" /> <path d="m9 15-1-1" /> <path d="m15 15 1-1" /> <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" /> <path d="m8 19-2 3" /> <path d="m16 19 2 3" /></svg></span>      <div class="day-label">20 Sep</div>      <article class="card travel">
+        <div class="card-top"><h3>Kunsthistorisches Museum Wien</h3></div>
+        <div class="blurb"><ul class='mini'><li>Hofburg</li><li>St. Charles's Church</li><li>NightJet to La Spezia</li></ul></div>
+      </article>    </div>  </div>  <div class="leg" style="--leg:var(--terracotta)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>La Spezia</h2>
+      <div class="sub">2 days</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Costello</span></div>
+    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">21 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Riomaggiore</h3></div>
+        <div class="blurb"><ul class='mini'><li>Manarola</li><li>Corniglia</li></ul></div>
+      </article>    </div>    <div class="day">      <span class="node node-dot"></span>      <div class="day-label">22 Sep</div>      <article class="card">
+        <div class="card-top"><h3>Vernazza</h3></div>
+        <div class="blurb">Monterosso al Mare</div>
+      </article>    </div>  </div>  <div class="leg" style="--leg:var(--azulejo)">    <div class="station">
+      <span class="node node-city"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></span>
+      <h2>Milan</h2>
+      <div class="sub">1 day</div>
+      <div class="stay"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" /> <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" /> <path d="M12 4v6" /> <path d="M2 18h20" /></svg><span>Milan</span></div>
+    </div>    <div class="day travel">      <span class="node node-travel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" /> <path d="m9 15-1-1" /> <path d="m15 15 1-1" /> <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" /> <path d="m8 19-2 3" /> <path d="m16 19 2 3" /></svg></span>      <div class="day-label">23 Sep</div>      <article class="card travel">
+        <div class="card-top"><h3>9:39 am La Spezia - 12:55 Milan</h3></div>
+        <div class="blurb">Departure at 21:00</div>
+      </article>    </div>  </div>  <div class="end"><span class="node node-end"></span>Home</div></div></section>
+  <section class="view" id="v-transport"><div class="tsec"><div class="tsec-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" /> <path d="m9 15-1-1" /> <path d="m15 15 1-1" /> <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" /> <path d="m8 19-2 3" /> <path d="m16 19 2 3" /></svg>Rail · 4 legs</div>      <div class="trow">
+        <div class="tw">14 Sep</div>
+        <div class="tb"><h4>8:15 AM Milan - 11:11 AM Bolzano</h4>
+          <div class="det"><ul class='mini'><li>Seceda : Guide</li><li>Lago di Carezza</li></ul></div></div>
+      </div>      <div class="trow">
+        <div class="tw">16 Sep</div>
+        <div class="tb"><h4>5:55 - Toblach (R 1832) - 6:59 Mühlbach (401) 07:12 - 07:29 Brixen (330)</h4>
+          <div class="det"><ul class='mini'><li>Val di Funes</li><li>8:59 - 9:59 Ganeid (330) - Brixen</li><li>11:04 - Brixen - Innsbruck 12:36</li><li>16:09 - Innsbruck - Salzburg 17:02</li></ul></div></div>
+      </div>      <div class="trow">
+        <div class="tw">20 Sep</div>
+        <div class="tb"><h4>Kunsthistorisches Museum Wien</h4>
+          <div class="det"><ul class='mini'><li>Hofburg</li><li>St. Charles's Church</li><li>NightJet to La Spezia</li></ul></div></div>
+      </div>      <div class="trow">
+        <div class="tw">23 Sep</div>
+        <div class="tb"><h4>9:39 am La Spezia - 12:55 Milan</h4>
+          <div class="det">Departure at 21:00</div></div>
+      </div></div></section>
+
+  <a class="back" href="../">← All trips</a>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const vstates = [...document.querySelectorAll('.vstate')];
+const syncTabs = () => vstates.forEach(r => {
+  const t = document.querySelector(`.vtab[for="${r.id}"]`);
+  if (t) t.classList.toggle('on', r.checked);
+});
+vstates.forEach(r => r.addEventListener('change', () => {
+  syncTabs(); $('#here').classList.remove('show');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}));
+syncTabs();
+const onJourney = () => $('#r-journey').checked;
+
+(function(){
+  const here = $('#here'), legs = [...document.querySelectorAll('.leg')];
+  if (!('IntersectionObserver' in window) || !legs.length) return;
+  const io = new IntersectionObserver(es => {
+    const v = es.filter(e => e.isIntersecting)
+                .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (v) here.textContent = v.target.querySelector('h2').textContent;
+  }, {rootMargin: '-64px 0px -70% 0px', threshold: 0});
+  legs.forEach(l => io.observe(l));
+  const update = () => here.classList.toggle('show',
+    window.scrollY > 320 && !!here.textContent && onJourney());
+  addEventListener('scroll', update, {passive: true});
+  vstates.forEach(r => r.addEventListener('change', () => setTimeout(update, 60)));
+  update();
+})();
+</script>
+</body>
+</html>
